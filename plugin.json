@@ -1,7 +1,7 @@
 {
   "id": "neodex.budget",
   "name": "Budget",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "NDesumeur",
   "description": "Suis tes comptes et tes livrets : soldes à recopier depuis ta banque d'un clic, dépenses, rentrées et virements, abonnements prélevés tout seuls à leur date. La prévision d'épargne calcule mois par mois sur 12 mois les intérêts (par an ou par mois) et tes versements, déborde sur l'autre livret quand un plafond est atteint et donne la date de ton objectif. Rien n'est relié à ta banque.",
   "icon": "icon.png",
