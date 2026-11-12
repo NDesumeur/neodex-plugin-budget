@@ -10,6 +10,7 @@
   "neobase": ">=4.0.0",
   "type": "app",
   "category": "Finance",
+  "compatibility": ["windows", "android", "linux"],
   "syncMode": "fusion",
   "syncInfo": "Comptes, opérations, abonnements et plan d'épargne.",
   "mobile": true,
