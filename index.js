@@ -1,21 +1,27 @@
 // Budget : ton appli d'origine (HTML et code inchangés), livrée en plugin.
 // Ses données sont dans le dossier du plugin, que NeoDex sauvegarde (synchro cloud et sauvegardes) ; à la première ouverture elle reprend ce que tu avais dans NeoDex.
 // Elle tourne dans le bac à sable de NeoDex, avec ses outils d'interface (ctx.host) et seulement les autorisations de son plugin.json.
-const HTML = "<div class=\"appWrap\">\n      <div class=\"agHead\"><span class=\"label\">Budget</span><span class=\"hint\">clic sur un montant : écrire le solde de ta banque</span><div class=\"agNav\"><button class=\"btn main px\" id=\"bdNewAcc\">+ NOUVEAU COMPTE</button></div></div>\n      <div class=\"sysGrid\" id=\"bdTiles\"></div>\n      <div class=\"sysCard px\" id=\"bdAccBox\" style=\"display:none\"><span class=\"label\" id=\"bdAccTitle\">Nouveau compte</span>\n        <div class=\"bdForm\">\n          <input class=\"f\" id=\"bdAccName\" placeholder=\"Nom (ex : Livret Jeune, PEL…)\" spellcheck=\"false\">\n          <select class=\"f\" id=\"bdAccType\"><option value=\"epargne\">Épargne (livret, PEL…)</option><option value=\"courant\">Compte courant</option></select>\n          <input class=\"f\" id=\"bdAccBal\" placeholder=\"Solde €\" inputmode=\"decimal\">\n          <input class=\"f\" id=\"bdAccCap\" placeholder=\"Plafond € (facultatif)\" inputmode=\"decimal\">\n          <input class=\"f\" id=\"bdAccRate\" placeholder=\"Intérêts %\" inputmode=\"decimal\">\n          <select class=\"f\" id=\"bdAccPer\"><option value=\"an\">par an</option><option value=\"mois\">par mois</option></select>\n          <button class=\"btn main px\" id=\"bdAccSave\">Enregistrer</button><button class=\"btn px\" id=\"bdAccCancel\">Annuler</button><button class=\"btn px\" id=\"bdAccDel\">Supprimer le compte</button>\n        </div>\n        <div class=\"hint\">Les intérêts sont ajoutés chaque mois dans la prévision (un taux annuel est converti en taux mensuel équivalent). Tu peux les changer quand tu veux.</div>\n      </div>\n      <div class=\"sysCard px\"><span class=\"label\">Ajouter une opération</span>\n        <div class=\"bdForm\">\n          <select class=\"f\" id=\"bdKind\"><option value=\"depense\">Dépense</option><option value=\"rentree\">Rentrée d'argent</option><option value=\"virement\">Virement</option></select>\n          <select class=\"f\" id=\"bdAcc\" title=\"Compte\"></select>\n          <select class=\"f\" id=\"bdTo\" title=\"Compte qui reçoit\"></select>\n          <input class=\"f\" id=\"bdLabel\" placeholder=\"Libellé (facultatif : courses, salaire…)\" spellcheck=\"false\">\n          <input class=\"f\" id=\"bdAmount\" placeholder=\"Montant €\" inputmode=\"decimal\">\n          <button class=\"btn main px\" id=\"bdAdd\">Ajouter</button>\n        </div>\n      </div>\n      <div class=\"sysCard px\"><span class=\"label\">Abonnements</span><span class=\"hint\" id=\"bdSubSum\"></span>\n        <div class=\"bdForm\">\n          <input class=\"f\" id=\"bdSubName\" placeholder=\"Nom (Netflix, Spotify, téléphone…)\" spellcheck=\"false\" aria-label=\"Nom de l'abonnement\">\n          <input class=\"f\" id=\"bdSubAmount\" placeholder=\"Montant €\" inputmode=\"decimal\" aria-label=\"Montant\">\n          <select class=\"f\" id=\"bdSubEvery\" aria-label=\"Tous les\"><option value=\"mois\">par mois</option><option value=\"an\">par an</option><option value=\"semaine\">par semaine</option></select>\n          <input class=\"f\" id=\"bdSubNext\" type=\"date\" aria-label=\"Prochain prélèvement\">\n          <select class=\"f\" id=\"bdSubAcc\" title=\"Compte prélevé\" aria-label=\"Compte prélevé\"></select>\n          <button class=\"btn main px\" id=\"bdSubAdd\">Ajouter</button>\n        </div>\n        <div id=\"bdSubs\"></div>\n        <div class=\"hint\">Le jour du prélèvement, la dépense s'ajoute toute seule au compte choisi.</div>\n      </div>\n      <div class=\"stCols\">\n        <div class=\"sysCard px\"><span class=\"label\">Dernières opérations</span><div id=\"bdTx\"></div></div>\n        <div class=\"sysCard px\"><span class=\"label\">Prévoir mon épargne</span>\n          <div class=\"bdPlan\">Je mets de côté <input class=\"f\" id=\"bdPlanMonthly\" inputmode=\"decimal\" placeholder=\"150\"> € par mois sur le <select class=\"f\" id=\"bdPlanTo\"></select></div>\n          <div class=\"bdPlan\">Objectif (facultatif) <input class=\"f\" id=\"bdPlanTarget\" inputmode=\"decimal\" placeholder=\"ex : 3000\"> €</div>\n          <div id=\"bdPlanOut\"></div>\n          <span class=\"label\" style=\"margin-top:6px\">Livrets · 12 prochains mois</span>\n          <div id=\"bdChart\" class=\"colChart\"></div>\n        </div>\n      </div>\n    </div>";
+const HTML = "<div class=\"appWrap wide\">\n      <div class=\"agHead\"><span class=\"label\">Budget</span><span class=\"hint\">clic sur un montant : écrire le solde de ta banque</span><div class=\"agNav\"><button class=\"btn main px\" id=\"bdNewAcc\">+ NOUVEAU COMPTE</button></div></div>\n      <div class=\"sysGrid\" id=\"bdTiles\"></div>\n      <div class=\"sysCard px\" id=\"bdAccBox\" style=\"display:none\"><span class=\"label\" id=\"bdAccTitle\">Nouveau compte</span>\n        <div class=\"bdForm\">\n          <input class=\"f\" id=\"bdAccName\" placeholder=\"Nom (ex : Livret Jeune, PEL…)\" spellcheck=\"false\">\n          <select class=\"f\" id=\"bdAccType\"><option value=\"epargne\">Épargne (livret, PEL…)</option><option value=\"courant\">Compte courant</option></select>\n          <input class=\"f\" id=\"bdAccBal\" placeholder=\"Solde €\" inputmode=\"decimal\">\n          <input class=\"f\" id=\"bdAccCap\" placeholder=\"Plafond € (facultatif)\" inputmode=\"decimal\">\n          <input class=\"f\" id=\"bdAccRate\" placeholder=\"Intérêts %\" inputmode=\"decimal\">\n          <select class=\"f\" id=\"bdAccPer\"><option value=\"an\">par an</option><option value=\"mois\">par mois</option></select>\n          <button class=\"btn main px\" id=\"bdAccSave\">Enregistrer</button><button class=\"btn px\" id=\"bdAccCancel\">Annuler</button><button class=\"btn px\" id=\"bdAccDel\">Supprimer le compte</button>\n        </div>\n        <div class=\"hint\">Les intérêts sont ajoutés chaque mois dans la prévision (un taux annuel est converti en taux mensuel équivalent). Tu peux les changer quand tu veux.</div>\n      </div>\n      <div class=\"sysCard px\"><span class=\"label\">Ajouter une opération</span>\n        <div class=\"bdForm\">\n          <select class=\"f\" id=\"bdKind\"><option value=\"depense\">Dépense</option><option value=\"rentree\">Rentrée d'argent</option><option value=\"virement\">Virement</option></select>\n          <select class=\"f\" id=\"bdCat\" aria-label=\"Catégorie\" title=\"Catégorie de la dépense\"></select>\n          <select class=\"f\" id=\"bdAcc\" title=\"Compte\"></select>\n          <select class=\"f\" id=\"bdTo\" title=\"Compte qui reçoit\"></select>\n          <input class=\"f\" id=\"bdLabel\" placeholder=\"Libellé (facultatif : courses, salaire…)\" spellcheck=\"false\">\n          <input class=\"f\" id=\"bdAmount\" placeholder=\"Montant €\" inputmode=\"decimal\">\n          <button class=\"btn main px\" id=\"bdAdd\">Ajouter</button>\n        </div>\n      </div>\n      <div class=\"sysCard px\"><span class=\"label\">Abonnements</span><span class=\"hint\" id=\"bdSubSum\"></span>\n        <div class=\"bdForm\">\n          <input class=\"f\" id=\"bdSubName\" placeholder=\"Nom (Netflix, Spotify, téléphone…)\" spellcheck=\"false\" aria-label=\"Nom de l'abonnement\">\n          <input class=\"f\" id=\"bdSubAmount\" placeholder=\"Montant €\" inputmode=\"decimal\" aria-label=\"Montant\">\n          <select class=\"f\" id=\"bdSubEvery\" aria-label=\"Tous les\"><option value=\"mois\">par mois</option><option value=\"an\">par an</option><option value=\"semaine\">par semaine</option></select>\n          <input class=\"f\" id=\"bdSubNext\" type=\"date\" aria-label=\"Prochain prélèvement\">\n          <select class=\"f\" id=\"bdSubAcc\" title=\"Compte prélevé\" aria-label=\"Compte prélevé\"></select>\n          <button class=\"btn main px\" id=\"bdSubAdd\">Ajouter</button>\n        </div>\n        <div id=\"bdSubs\"></div>\n        <div class=\"hint\">Le jour du prélèvement, la dépense s'ajoute toute seule au compte choisi.</div>\n      </div>\n      <div class=\"stCols\">\n        <div class=\"sysCard px\"><span class=\"label\">Dernières opérations</span><div id=\"bdTx\"></div></div>\n        <div class=\"sysCard px\"><div class=\"bdCatHead\"><span class=\"label\">Dépenses par catégorie</span><button class=\"btn px\" id=\"bdCatPrev\" title=\"Mois précédent\">‹</button><b id=\"bdCatMonth\"></b><button class=\"btn px\" id=\"bdCatNext\" title=\"Mois suivant\">›</button></div><div id=\"bdCats\"></div></div>\n        <div class=\"sysCard px\"><span class=\"label\">Prévoir mon épargne</span>\n          <div class=\"bdPlan\">Je mets de côté <input class=\"f\" id=\"bdPlanMonthly\" inputmode=\"decimal\" placeholder=\"150\"> € par mois sur le <select class=\"f\" id=\"bdPlanTo\"></select></div>\n          <div class=\"bdPlan\">Objectif (facultatif) <input class=\"f\" id=\"bdPlanTarget\" inputmode=\"decimal\" placeholder=\"ex : 3000\"> €</div>\n          <div id=\"bdPlanOut\"></div>\n          <span class=\"label\" style=\"margin-top:6px\">Livrets · 12 prochains mois</span>\n          <div id=\"bdChart\" class=\"colChart\"></div>\n        </div>\n      </div>\n    </div>";
 /*CSS-MOVED*/ const CSS = `.bdForm{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#bdKind{width:170px}
+#bdKind{width:170px} #bdCat{width:170px}
+.bdCatHead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.bdCatHead .label{flex:0 0 100%;margin:0}.bdCatHead b{font:clamp(11px,.8vw,14px) var(--title);color:#fff;min-width:9em;text-align:center;text-transform:capitalize}.bdCatHead .btn{height:32px;padding:0 10px}
+.bdCatRow{display:grid;grid-template-columns:clamp(96px,7vw,140px) minmax(50px,1fr) clamp(80px,6vw,110px) 40px;gap:10px;align-items:center;padding:5px 0;font-size:clamp(14px,1vw,17px);color:var(--lilac)}
+.bdCatRow .tr{height:clamp(14px,1.1vw,20px);background:rgba(255,255,255,.05)}.bdCatRow .tr i{display:block;height:100%;background:var(--pink);border-radius:0 4px 4px 0}
+.bdCatRow b{color:#fff;font-weight:600;text-align:right}.bdCatRow span:last-child{text-align:right;color:var(--muted)}
+.bdCatTot{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08);font-size:clamp(14px,1vw,17px);color:var(--lilac)}.bdCatTot b{color:#fff}
 #bdAcc,#bdTo{width:190px}
 #bdLabel{flex:1;min-width:200px}
 #bdAmount{width:120px}
 #bdSubName{flex:1;min-width:180px} #bdSubAmount{width:110px} #bdSubEvery{width:130px} #bdSubNext{width:160px} #bdSubAcc{width:180px}
-.bdSub{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,.06)} .bdSub small{display:block;color:var(--muted);font-size:12px} .bdSub .soon{color:var(--pink)}
+.bdSub{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,.06)} .bdSub small{display:block;color:var(--muted);font-size:13px} .bdSub .soon{color:var(--pink)}
 #bdAccName{flex:1;min-width:200px}
 #bdAccType{width:210px}
 #bdAccBal,#bdAccCap,#bdAccRate{width:150px}
 #bdAccPer{width:110px}
-.bdEdit{position:absolute;top:8px;right:8px;width:auto;min-width:0;font-size:8px;padding:4px 8px}
+.bdEdit{position:absolute;top:8px;right:8px;width:auto;min-width:0;font-size:10px;padding:4px 8px}
 .bdBal{cursor:text}
 .bdBal:hover{color:var(--pink)}
+#bdTiles{grid-template-columns:repeat(auto-fill,minmax(clamp(220px,16vw,300px),1fr))}
 .bdBalInput{font:20px var(--title);padding:6px 10px}
 .bdPlan{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:16px;color:var(--lilac)}
 .bdPlan .f{width:110px;font-size:15px;padding:7px 10px}
@@ -23,7 +29,7 @@ const HTML = "<div class=\"appWrap\">\n      <div class=\"agHead\"><span class=\
 #bdPlanOut .advice{display:block}
 .bdForm .f{font-size:15px;padding:9px 12px}
 .bdForm .btn{height:40px}
-.advice{display:flex;gap:12px;align-items:baseline;padding:7px 0;font-size:15px;line-height:1.45;color:var(--lilac)}
+.advice{display:flex;gap:12px;align-items:baseline;padding:7px 0;font-size:clamp(15px,1vw,17px);line-height:1.45;color:var(--lilac)}
 .advice+.advice{border-top:1px solid rgba(255,255,255,.06)}
 .advice .badge{flex:none;min-width:84px;text-align:center}
 `;  // le style de ce plugin (il utilise les variables du thème de NeoDex)
@@ -90,6 +96,29 @@ export default async function (ctx) {
     console.assert(g[0].bal.x === 1009.49 && g[0].bal.y === 1010 && Math.abs(g[11].bal.x - 1120) < 0.1 && g[0].bal.livretJeune === 1500, 'intérêts');  // 12 % par an = 12 % après 12 mois ; 1 % par mois
     budget = keep;
   }
+  // les catégories des dépenses ; une ancienne dépense sans catégorie est devinée d'après son libellé
+  const CATS = [['courses', 'Courses'], ['logement', 'Logement'], ['transport', 'Transport'], ['resto', 'Restaurants'], ['loisirs', 'Loisirs'], ['shopping', 'Shopping'], ['sante', 'Santé'], ['abonnements', 'Abonnements'], ['autre', 'Autre']];
+  const CAT_GUESS = [['courses', /courses|carrefour|leclerc|lidl|auchan|intermarch|super ?u\b|aldi|monoprix|march[ée]/i], ['logement', /loyer|edf|engie|eau\b|électricit|electricit|gaz\b|assurance hab/i], ['transport', /essence|carburant|train|sncf|bus|tadao|péage|peage|parking|uber/i],
+    ['resto', /resto|restaurant|mcdo|burger|kebab|pizza|café|cafe|boulang/i], ['loisirs', /cin[ée]|jeu|steam|concert|sortie|livre|sport/i], ['shopping', /amazon|vêtement|vetement|zara|fnac|cadeau/i], ['sante', /pharma|médecin|medecin|dentiste|mutuelle/i]];
+  const catOf = o => o.cat || (o.sub ? 'abonnements' : (CAT_GUESS.find(([, re]) => re.test(o.label || '')) || ['autre'])[0]);
+  // les dépenses d'un mois (« AAAA-MM ») par catégorie, de la plus grosse à la plus petite ; les virements entre tes comptes n'en sont pas
+  const bdByCat = (ops, m) => { const t = {}; for (const o of ops) if (o.amount < 0 && !o.group && o.date.startsWith(m)) t[catOf(o)] = r2((t[catOf(o)] || 0) - o.amount); return Object.entries(t).sort((a, c) => c[1] - a[1]); };
+  console.assert(JSON.stringify(bdByCat([{date: '2026-11-02', amount: -30, label: 'Lidl'}, {date: '2026-11-03', amount: -12.5, cat: 'loisirs'}, {date: '2026-11-04', amount: -20, label: 'Courses'}, {date: '2026-11-05', amount: -100, group: 'g'}, {date: '2026-10-30', amount: -9}, {date: '2026-11-06', amount: 500}], '2026-11')) === '[["courses",50],["loisirs",12.5]]', 'bdByCat');
+  let catMonth = ymd(new Date()).slice(0, 7);
+  function renderCats() {
+    const list = bdByCat(budget.ops, catMonth), tot = r2(list.reduce((s, x) => s + x[1], 0)), max = list[0]?.[1] || 1;
+    $('bdCatMonth').textContent = new Date(catMonth + '-15').toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'});
+    $('bdCatNext').disabled = catMonth >= ymd(new Date()).slice(0, 7);
+    if (!list.length) return $('bdCats').replaceChildren(el('div', 'hint', 'Aucune dépense ce mois-là.'));
+    const tf = el('div', 'bdCatTot'); tf.append(el('span', '', 'Total des dépenses'), el('b', '', eur(tot)));
+    $('bdCats').replaceChildren(...list.map(([k, v]) => {
+      const r = el('div', 'bdCatRow'), tr = el('div', 'tr'), f = el('i'); f.style.width = Math.max(1, v / max * 100) + '%'; tr.append(f);
+      r.append(el('span', '', CATS.find(c => c[0] === k)?.[1] || k), tr, el('b', '', eur(v)), el('span', '', Math.round(v / tot * 100) + ' %')); r.title = (CATS.find(c => c[0] === k)?.[1] || k) + ' : ' + eur(v) + ' sur ' + eur(tot); r.dataset.cat = k; return r;
+    }), tf);
+  }
+  const shiftMonth = n => { const d = new Date(catMonth + '-15'); d.setMonth(d.getMonth() + n); catMonth = ymd(d).slice(0, 7); renderCats(); };
+  $('bdCatPrev').onclick = () => shiftMonth(-1); $('bdCatNext').onclick = () => shiftMonth(1);
+  $('bdCat').replaceChildren(...CATS.map(([k, n]) => new Option(n, k)));
   const monthLong = m => new Date(m + '-15').toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'});
 
   var renderBudget = function () {
@@ -208,12 +237,12 @@ export default async function (ctx) {
     budget.accounts = budget.accounts.filter(x => x !== a); budget.ops = budget.ops.filter(o => o.acc !== a.id);
     $('bdAccBox').style.display = 'none'; saveBudget(); renderBudget();
   };
-  $('bdKind').onchange = () => { $('bdTo').style.display = $('bdKind').value === 'virement' ? '' : 'none'; };
+  $('bdKind').onchange = () => { $('bdTo').style.display = $('bdKind').value === 'virement' ? '' : 'none'; $('bdCat').style.display = $('bdKind').value === 'depense' ? '' : 'none'; };
   $('bdAdd').onclick = () => {
     const amount = money($('bdAmount').value), kind = $('bdKind').value, acc = $('bdAcc').value, to = $('bdTo').value, label = $('bdLabel').value.trim(), date = ymd(new Date());
     if (!(amount > 0)) return toast('Indique un montant (ex : 12,50)', true);
     if (kind === 'virement' && to === acc) return toast('Choisis deux comptes différents', true);
-    const add = (a, v, l, group) => { budget.ops.push({id: crypto.randomUUID(), date, acc: a, label: l, amount: v, ...(group ? {group} : {})}); accOf(a).balance = r2(accOf(a).balance + v); };
+    const add = (a, v, l, group) => { budget.ops.push({id: crypto.randomUUID(), date, acc: a, label: l, amount: v, ...(group ? {group} : {}), ...(v < 0 && !group ? {cat: $('bdCat').value} : {})}); accOf(a).balance = r2(accOf(a).balance + v); };
     if (kind === 'virement') { const g = crypto.randomUUID(); add(acc, -amount, label || 'Virement vers ' + accOf(to).name, g); add(to, amount, label || 'Virement depuis ' + accOf(acc).name, g); }
     else add(acc, kind === 'depense' ? -amount : amount, label);
     $('bdLabel').value = $('bdAmount').value = ''; $('bdAmount').focus();
@@ -270,8 +299,9 @@ export default async function (ctx) {
   { const real = renderBudget; renderBudget = function () {
     if (!budget) return;
     const n = subsDue(); if (n) { saveBudget(); toast(n + ' prélèvement' + (n > 1 ? 's' : '') + ' d\'abonnement ajouté' + (n > 1 ? 's' : '')); }
-    real(); renderSubs();
+    real(); renderSubs(); renderCats();
   }; }
   // ---- fin ----
+  view.__bd = {load: d => { loadBudget(d); renderBudget(); }, byCat: bdByCat};  // pour l'auto-test
   ctx.onOpen(() => { renderBudget(); });
 }
