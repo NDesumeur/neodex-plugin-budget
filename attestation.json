@@ -1,9 +1,9 @@
 {
   "pluginId": "neodex.budget",
   "repo": "NDesumeur/neodex-plugin-budget",
-  "version": "1.3.1",
-  "sha256": "78b78dcd88b93a4c84046fb68a92ea945cae79bf6cca3207641a4c91ca080517",
-  "approvedAt": "2026-11-16T16:38:47.248Z",
+  "version": "1.3.2",
+  "sha256": "ac3f11129432d68bd82f8a7ce33694d7ef2eeba9bfed97a062421f56c9e3e034",
+  "approvedAt": "2026-11-19T19:54:26.389Z",
   "neobase": ">=4.0.0",
-  "signature": "9w7bqkbE63bzH8Rz1U6GN8nSxCUwXKnBm5iS8CP+xU6xAJol9jWDtrv3bg1c/BuLDV6nDc4egH47yG5UJYH3BA=="
+  "signature": "Yn4HSZ0/6pPjS78BS2OJ0pnMiOGWr4+RI5xEYfmpn+WWKwZ4S8yNr/pVTUCk/UpXWLi+lEA4HB9xVUwoRDyZBQ=="
 }
