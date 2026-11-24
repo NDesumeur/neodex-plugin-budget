@@ -4,6 +4,10 @@ Keep track of the money in your accounts and savings accounts: balances, expense
 
 *Version française : [README.md](README.md)*
 
+## Import a bank statement (new in 1.4.0)
+
+IMPORT A STATEMENT reads the CSV (all French banks) or OFX downloaded from your bank’s website: a preview to tick, readable labels, categories guessed and learned from your choices, duplicates left out. The file is read on the spot.
+
 ## Your accounts
 
 - To start with: a **main account**, a **Livret A** (ceiling €22,950) and a **Livret Jeune** (ceiling €1,600), the French regulated savings accounts.
@@ -36,3 +40,13 @@ Accounts, operations, subscriptions and the savings plan are stored by NeoDex, b
 In NeoDex: **NeoStore → Discover → Budget → Install**.
 
 Building a plugin: see the [NeoDex SDK](https://github.com/NDesumeur/neodex-sdk).
+
+## Import a bank statement (1.4.0)
+
+No more copying everything by hand: download the statement from your bank’s website (CSV or OFX) and click **IMPORT A STATEMENT**.
+
+- CSV files from all French banks are recognized: with or without a header, debit and credit in two columns or a single amount, semicolon or comma, Windows accents. OFX and QFX files too.
+- A preview shows each transaction with a readable label (“PAIEMENT PAR CARTE CARREFOUR LENS 02/11” becomes “Carrefour Lens”) and its guessed category. Budget remembers the category you gave a shop.
+- Transactions already in your budget are left out; those that look like an expense entered by hand (same amount, within 3 days) are unticked.
+- The balance: leave it as it is (it is already your bank’s), add the transactions to it, or take the one from the OFX statement. A transaction imported without touching the balance does not change it either if you delete it.
+- Nothing leaves your computer: the file is read on the spot.

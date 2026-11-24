@@ -1,20 +1,26 @@
 {
   "id": "neodex.budget",
   "name": "Budget",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "author": "NDesumeur",
-  "description": "Suis tes comptes et tes livrets : soldes à recopier depuis ta banque d'un clic, dépenses, rentrées et virements, abonnements prélevés tout seuls à leur date. La prévision d'épargne calcule mois par mois sur 12 mois les intérêts (par an ou par mois) et tes versements, déborde sur l'autre livret quand un plafond est atteint et donne la date de ton objectif. Rien n'est relié à ta banque. S'adapte à la taille de l'écran ; chaque dépense a une catégorie (les anciennes sont devinées d'après leur libellé) et un graphique montre les dépenses du mois par catégorie, mois par mois.",
+  "description": "Suis tes comptes et tes livrets : soldes à recopier depuis ta banque d'un clic, dépenses, rentrées et virements, abonnements prélevés tout seuls à leur date. La prévision d'épargne calcule mois par mois sur 12 mois les intérêts (par an ou par mois) et tes versements, déborde sur l'autre livret quand un plafond est atteint et donne la date de ton objectif. Rien n'est relié à ta banque. S'adapte à la taille de l'écran ; chaque dépense a une catégorie (les anciennes sont devinées d'après leur libellé) et un graphique montre les dépenses du mois par catégorie, mois par mois. Import des relevés de banque (CSV de toutes les banques françaises, OFX) : un aperçu à cocher, les doublons écartés, les catégories devinées et apprises de tes choix.",
   "icon": "icon.png",
   "entry": "index.js",
   "view": "budget",
   "neobase": ">=4.0.0",
   "type": "app",
   "category": "Finance",
-  "compatibility": ["windows", "android", "linux"],
+  "compatibility": [
+    "windows",
+    "android",
+    "linux"
+  ],
   "syncMode": "fusion",
   "sync": {
     "budget": {
-      "share": ["*"]
+      "share": [
+        "*"
+      ]
     }
   },
   "syncInfo": "Comptes, opérations, abonnements et plan d'épargne.",

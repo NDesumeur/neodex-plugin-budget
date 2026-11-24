@@ -4,6 +4,10 @@ Suis l'argent de tes comptes et de tes livrets : soldes, dépenses, rentrées, v
 
 *English version: [README.en.md](README.en.md)*
 
+## Importer un relevé de banque (nouveau en 1.4.0)
+
+IMPORTER UN RELEVÉ lit le CSV (toutes les banques françaises) ou l’OFX téléchargé sur le site de ta banque : un aperçu à cocher, des libellés lisibles, les catégories devinées et apprises de tes choix, les doublons écartés. Le fichier est lu sur place.
+
 ## Tes comptes
 
 - Au départ : un **compte principal**, un **Livret A** (plafond 22 950 €) et un **Livret Jeune** (plafond 1 600 €).
@@ -36,3 +40,13 @@ Comptes, opérations, abonnements et plan d'épargne sont enregistrés par NeoDe
 Dans NeoDex : **NeoStore → À découvrir → Budget → Installer**.
 
 Développer un plugin : voir le [SDK NeoDex](https://github.com/NDesumeur/neodex-sdk).
+
+## Importer un relevé de banque (1.4.0)
+
+Plus besoin de tout recopier : télécharge le relevé sur le site de ta banque (CSV ou OFX) et clique sur **IMPORTER UN RELEVÉ**.
+
+- Les fichiers CSV de toutes les banques françaises sont reconnus : avec ou sans en-tête, débit et crédit en deux colonnes ou un seul montant, point-virgule ou virgule, accents de Windows. Les fichiers OFX et QFX aussi.
+- Un aperçu montre chaque opération avec un libellé lisible (« PAIEMENT PAR CARTE CARREFOUR LENS 02/11 » devient « Carrefour Lens ») et sa catégorie devinée. Budget se souvient de la catégorie que tu as donnée à un commerçant.
+- Les opérations déjà dans ton budget sont écartées ; celles qui ressemblent à une dépense saisie à la main (même montant, à 3 jours près) sont décochées.
+- Le solde : laisse-le tel quel (il est déjà celui de ta banque), ajoute-lui les opérations, ou prends celui du relevé OFX. Une opération importée sans toucher au solde ne le change pas non plus si tu la supprimes.
+- Rien ne quitte ton ordinateur : le fichier est lu sur place.
